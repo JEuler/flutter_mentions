@@ -453,7 +453,10 @@ class FlutterMentionsState extends State<FlutterMentions> {
                 autofillHints: widget.autofillHints,
                 decoration: widget.decoration,
                 expands: widget.expands,
-                onEditingComplete: widget.onEditingComplete,
+                onEditingComplete: () {
+                  widget.onEditingComplete?.call();
+                  controller.clear();
+                },
                 onTap: widget.onTap,
                 onSubmitted: widget.onSubmitted,
                 enabled: widget.enabled,
