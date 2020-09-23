@@ -24,7 +24,7 @@ class AnnotationEditingController extends TextEditingController {
 
         // Default markup format for mentions
         if (!mention.disableMarkup) {
-          return '<span data-entity="comment">${mention.display}</span>';
+          return '@<span data-entity="comment">${mention.display}</span>';
         } else {
           return match[0];
         }
