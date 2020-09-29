@@ -425,49 +425,67 @@ class FlutterMentionsState extends State<FlutterMentions> {
                 },
               )
             : Container(),
-        child: TextField(
-          maxLines: widget.maxLines,
-          minLines: widget.minLines,
-          maxLength: widget.maxLength,
-          focusNode: widget.focusNode,
-          keyboardType: widget.keyboardType,
-          keyboardAppearance: widget.keyboardAppearance,
-          textInputAction: widget.textInputAction,
-          textCapitalization: widget.textCapitalization,
-          style: widget.style,
-          textAlign: widget.textAlign,
-          textDirection: widget.textDirection,
-          readOnly: widget.readOnly,
-          showCursor: widget.showCursor,
-          autofocus: widget.autofocus,
-          autocorrect: widget.autocorrect,
-          maxLengthEnforced: widget.maxLengthEnforced,
-          cursorColor: widget.cursorColor,
-          cursorRadius: widget.cursorRadius,
-          cursorWidth: widget.cursorWidth,
-          buildCounter: widget.buildCounter,
-          autofillHints: widget.autofillHints,
-          decoration: widget.decoration,
-          expands: widget.expands,
-          onEditingComplete: () {
-            widget.onEditingComplete?.call();
-            controller.clear();
-          },
-          onTap: widget.onTap,
-          onSubmitted: widget.onSubmitted,
-          enabled: widget.enabled,
-          enableInteractiveSelection: widget.enableInteractiveSelection,
-          enableSuggestions: widget.enableSuggestions,
-          scrollController: widget.scrollController,
-          scrollPadding: widget.scrollPadding,
-          scrollPhysics: widget.scrollPhysics,
-          controller: controller,
-          onChanged: (text) {
-            if (widget.onChanged != null) widget.onChanged(text);
-            if (widget.onMarkupChanged != null) {
-              widget.onMarkupChanged(controller.markupText);
-            }
-          },
+        child: Row(
+          children: [
+            ...widget.leading,
+            Expanded(
+              child: TextField(
+                maxLines: widget.maxLines,
+                minLines: widget.minLines,
+                maxLength: widget.maxLength,
+                focusNode: widget.focusNode,
+                keyboardType: widget.keyboardType,
+                keyboardAppearance: widget.keyboardAppearance,
+                textInputAction: widget.textInputAction,
+                textCapitalization: widget.textCapitalization,
+                style: widget.style,
+                textAlign: widget.textAlign,
+                textDirection: widget.textDirection,
+                readOnly: widget.readOnly,
+                showCursor: widget.showCursor,
+                autofocus: widget.autofocus,
+                autocorrect: widget.autocorrect,
+                maxLengthEnforced: widget.maxLengthEnforced,
+                cursorColor: widget.cursorColor,
+                cursorRadius: widget.cursorRadius,
+                cursorWidth: widget.cursorWidth,
+                buildCounter: widget.buildCounter,
+                autofillHints: widget.autofillHints,
+                decoration: widget.decoration,
+                expands: widget.expands,
+                onEditingComplete: () {
+                  widget.onEditingComplete?.call();
+                  controller.clear();
+                },
+                onTap: widget.onTap,
+                onSubmitted: widget.onSubmitted,
+                enabled: widget.enabled,
+                enableInteractiveSelection: widget.enableInteractiveSelection,
+                enableSuggestions: widget.enableSuggestions,
+                scrollController: widget.scrollController,
+                scrollPadding: widget.scrollPadding,
+                scrollPhysics: widget.scrollPhysics,
+                controller: controller,
+                onChanged: (text) {
+                  if (widget.onChanged != null) {
+                    widget.onChanged(text);
+                  }
+
+                  if (widget.onMarkupChanged != null) {
+                    widget.onMarkupChanged(controller.markupText);
+                  }
+
+                  if (widget.onSearchChanged != null &&
+                      _selectedMention.str != null) {
+                    final str = _selectedMention.str.toLowerCase();
+
+                    widget.onSearchChanged(str[0], str.substring(1));
+                  }
+                },
+              ),
+            ),
+            ...widget.trailing,
+          ],
         ),
       ),
     );
